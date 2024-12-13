@@ -89,3 +89,38 @@ for r in regions:
     res += cost(r)
 # print(regions, res)
 # print(len(bfs(0, 0, grid[0][0])), "AREA", grid[0][0], "NODE")
+
+
+# For any polygon, the number of sides == the number of corners, so simply count the corners for every cell.
+
+#         NW  N  NE
+#          W  .  E
+#         SW  S  SE
+
+# . is the current cell. Take NW as an example:
+
+#     if NW != . and N == . and W == . -> It's a concave corner
+
+#         NW |N  NE
+#         ___|
+#          W  .  E
+#         SW  S  SE
+
+#     if NW != . and N != . and W != . -> It's a convex corner
+
+#         NW  N  NE
+#             _
+#          W |.  E
+#         SW  S  SE
+
+#     if NW == . and N != . and W != . -> It's a convex corner that is touching another convex corner on the other side
+
+#         NW |N  NE
+#         ___|_
+#          W |.  E
+#         SW  S  SE
+
+# Repeat for [NW, NE, SW, SE] in each cell.
+
+# Also, the first two conditions can be summarized as NW != . && N == W
+
